@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.Options;
+using OpenIdConnectOptions = ProductFeedback.BFF.Auth.OIDC.OpenIdConnectOptions;
 
 namespace ProductFeedback.BFF.Auth;
 
@@ -34,24 +36,18 @@ internal static class BffEndpointsModule
         .RequireAuthorization();
 
         // GET /bff/login - Initiates OIDC login flow
-        bffGroup.MapGet("/login", (HttpContext context, string? returnUrl) =>
+        bffGroup.MapGet("/login", (HttpContext context, IOptions<OpenIdConnectOptions> oidcOptions) =>
         {
-            // Validate returnUrl to prevent open redirect
-            if (!string.IsNullOrEmpty(returnUrl) && !IsLocalUrl(returnUrl, context))
-            {
-                returnUrl = "/";
-            }
-
             var properties = new AuthenticationProperties
             {
-                RedirectUri = returnUrl ?? "/"
+                RedirectUri = oidcOptions.Value.RedirectUri
             };
 
             return Results.Challenge(properties, [OpenIdConnectDefaults.AuthenticationScheme]);
         });
 
         // POST /bff/logout - Initiates logout
-        bffGroup.MapPost("/logout", async (HttpContext context, IAntiforgery antiforgery, string? returnUrl) =>
+        bffGroup.MapPost("/logout", async (HttpContext context, IAntiforgery antiforgery, IOptions<OpenIdConnectOptions> oidcOptions) =>
         {
             // Validate anti-forgery token
             try
@@ -67,15 +63,9 @@ internal static class BffEndpointsModule
                 });
             }
 
-            // Validate returnUrl to prevent open redirect
-            if (!string.IsNullOrEmpty(returnUrl) && !IsLocalUrl(returnUrl, context))
-            {
-                returnUrl = "/";
-            }
-
             var properties = new AuthenticationProperties
             {
-                RedirectUri = returnUrl ?? "/"
+                RedirectUri = oidcOptions.Value.RedirectUri
             };
 
             // Sign out from both cookie and OIDC
@@ -97,40 +87,5 @@ internal static class BffEndpointsModule
         });
 
         return app;
-    }
-
-    private static bool IsLocalUrl(string url, HttpContext context)
-    {
-        // Check if URL is relative
-        if (string.IsNullOrEmpty(url))
-        {
-            return false;
-        }
-
-        // Reject URLs that start with // or /\ (protocol-relative)
-        if (url.StartsWith("//") || url.StartsWith("/\\"))
-        {
-            return false;
-        }
-
-        // Reject URLs with @ (could be user info in absolute URL)
-        if (url.Contains('@'))
-        {
-            return false;
-        }
-
-        // URL must start with / and not be protocol-relative
-        if (url.StartsWith('/'))
-        {
-            return !url.StartsWith("//") && !url.StartsWith("/\\");
-        }
-
-        // Reject any absolute URLs
-        if (Uri.TryCreate(url, UriKind.Absolute, out _))
-        {
-            return false;
-        }
-
-        return true;
     }
 }

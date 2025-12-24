@@ -14,7 +14,8 @@ internal sealed class OpenIdConnectOptions
     public bool GetClaimsFromUserInfoEndpoint { get; init; }
     public bool MapInboundClaims { get; init; }
     public bool SaveTokens { get; init; }
-    public string Scope { get; init; } = string.Empty; 
-    public string AuthorityPath { get; init; } = string.Empty; 
+    public string Scope { get; init; } = string.Empty;
+    public string AuthorityPath { get; init; } = string.Empty;
     public string Authority => $"{ServerUrl}/{AuthorityPath}";
+    public string RedirectUri { get; init; } = "/";
 }
