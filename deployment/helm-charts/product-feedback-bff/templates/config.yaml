@@ -9,9 +9,8 @@ data:
   ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
   ForwardedHeaders__KnownNetworks__0: "10.244.0.0/16"
   ReverseProxy__Clusters__product-feedback-api__Destinations__destination1__Address: "http://product-feedback-api-svc.product-feedback.svc.cluster.local:5185/"
-  ConnectionStrings__RedisConnection: "redis-master.redis.svc.cluster.local:6379"
   KEYCLOAK_SERVER_URL: "https://identity.alexbartleynees.com"
   OpenIdConnectOptions__ClientSecret: ${CLIENT_SECRET}
   OpenIdConnectOptions__RedirectUri: https://product-feedback.alexbartleynees.com/signin-oidc
   Redis__UseTls: "true"
-  Redis__Host: "redis-master.redis.svc.cluster.local"
+  Redis__Host: "redis-master.redis.svc.cluster.local:6379"
