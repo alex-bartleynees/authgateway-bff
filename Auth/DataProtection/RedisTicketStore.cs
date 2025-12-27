@@ -28,9 +28,16 @@ internal sealed class RedisTicketStore : ITicketStore
         var serialized = _ticketSerializer.Serialize(ticket);
 
         var expiresUtc = ticket.Properties.ExpiresUtc;
-        TimeSpan? expiry = expiresUtc.HasValue
-            ? expiresUtc.Value - DateTimeOffset.UtcNow
-            : null;
+        TimeSpan? expiry = null;
+
+        if (expiresUtc.HasValue)
+        {
+            var remaining = expiresUtc.Value - DateTimeOffset.UtcNow;
+            // Add 5 minute buffer and ensure TTL is at least 1 minute
+            expiry = remaining > TimeSpan.Zero
+                ? remaining + TimeSpan.FromMinutes(5)
+                : TimeSpan.FromMinutes(1);
+        }
 
         await db.StringSetAsync(KeyPrefix + key, serialized, expiry);
     }
