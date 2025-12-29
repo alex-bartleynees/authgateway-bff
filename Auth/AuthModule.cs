@@ -14,13 +14,19 @@ internal static class AuthModule
         builder.Services.AddAuthorizationPolicies();
 
         // Configure anti-forgery services
+        var oidcOptions = builder.Configuration.GetSection(OpenIdConnectOptions.Key)
+            .Get<OpenIdConnectOptions>();
         builder.Services.AddAntiforgery(options =>
         {
             options.HeaderName = "X-CSRF-TOKEN";
             options.Cookie.Name = "__CSRF";
             options.Cookie.HttpOnly = true;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            options.Cookie.SameSite = SameSiteMode.Strict;
+            options.Cookie.SecurePolicy = oidcOptions?.RequireSecureCookies ?? true
+                ? CookieSecurePolicy.Always
+                : CookieSecurePolicy.SameAsRequest;
+            options.Cookie.SameSite = oidcOptions?.RequireSecureCookies ?? true
+                ? SameSiteMode.Strict
+                : SameSiteMode.Lax;
         });
 
         // Register token management service

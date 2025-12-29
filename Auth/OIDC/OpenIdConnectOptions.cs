@@ -14,6 +14,8 @@ internal sealed class OpenIdConnectOptions
     public bool GetClaimsFromUserInfoEndpoint { get; init; }
     public bool MapInboundClaims { get; init; }
     public bool SaveTokens { get; init; }
+    public bool RequireHttpsMetadata { get; init; } = true;
+    public bool RequireSecureCookies { get; init; } = true;
     public string Scope { get; init; } = string.Empty;
     public string AuthorityPath { get; init; } = string.Empty;
     public string Authority => $"{ServerUrl}/{AuthorityPath}";

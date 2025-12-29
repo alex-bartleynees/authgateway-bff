@@ -22,7 +22,9 @@ internal static class OpenIdConnectModule
       {
          options.Cookie.Name = openIdConnectOptions.CookieName;
          options.ExpireTimeSpan = TimeSpan.FromHours(8);
-         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+         options.Cookie.SecurePolicy = openIdConnectOptions.RequireSecureCookies
+            ? CookieSecurePolicy.Always
+            : CookieSecurePolicy.SameAsRequest;
          options.Cookie.SameSite = SameSiteMode.Strict;
          options.Cookie.HttpOnly = true;
 
@@ -60,7 +62,19 @@ internal static class OpenIdConnectModule
          options.GetClaimsFromUserInfoEndpoint = openIdConnectOptions.GetClaimsFromUserInfoEndpoint;
          options.MapInboundClaims = openIdConnectOptions.MapInboundClaims;
          options.SaveTokens = openIdConnectOptions.SaveTokens;
-         options.RequireHttpsMetadata = true;
+         options.RequireHttpsMetadata = openIdConnectOptions.RequireHttpsMetadata;
+
+         var cookieSecurePolicy = openIdConnectOptions.RequireSecureCookies
+            ? CookieSecurePolicy.Always
+            : CookieSecurePolicy.SameAsRequest;
+         options.CorrelationCookie.SecurePolicy = cookieSecurePolicy;
+         options.NonceCookie.SecurePolicy = cookieSecurePolicy;
+
+         var sameSiteMode = openIdConnectOptions.RequireSecureCookies
+            ? SameSiteMode.Strict
+            : SameSiteMode.Lax;
+         options.CorrelationCookie.SameSite = sameSiteMode;
+         options.NonceCookie.SameSite = sameSiteMode;
 
          // Callback paths
          options.CallbackPath = "/signin-oidc";
