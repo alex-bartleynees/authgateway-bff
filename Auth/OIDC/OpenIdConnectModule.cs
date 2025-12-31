@@ -12,6 +12,8 @@ internal static class OpenIdConnectModule
                                     .Get<OpenIdConnectOptions>()
                                  ?? throw new ArgumentException("OpenId Connect config is missing!");
 
+      builder.Services.AddSingleton(Options.Create(openIdConnectOptions));
+
       builder.Services.AddAuthentication(options =>
       {
          options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -25,7 +27,7 @@ internal static class OpenIdConnectModule
          options.Cookie.SecurePolicy = openIdConnectOptions.RequireSecureCookies
             ? CookieSecurePolicy.Always
             : CookieSecurePolicy.SameAsRequest;
-         options.Cookie.SameSite = SameSiteMode.Strict;
+         options.Cookie.SameSite = SameSiteMode.Lax;
          options.Cookie.HttpOnly = true;
 
          // Return 401 for API requests instead of redirecting to login
