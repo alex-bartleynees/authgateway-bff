@@ -11,6 +11,6 @@ data:
   ReverseProxy__Clusters__product-feedback-api__Destinations__destination1__Address: "http://product-feedback-api-svc.product-feedback.svc.cluster.local:5185/"
   KEYCLOAK_SERVER_URL: "https://identity.alexbartleynees.com"
   OpenIdConnectOptions__ClientSecret: ${CLIENT_SECRET}
-  OpenIdConnectOptions__RedirectUri: https://product-feedback.alexbartleynees.com/signin-oidc
+  OpenIdConnectOptions__RedirectUri: "/" 
   Redis__UseTls: "true"
   Redis__Host: "redis-master.redis.svc.cluster.local:6379"
