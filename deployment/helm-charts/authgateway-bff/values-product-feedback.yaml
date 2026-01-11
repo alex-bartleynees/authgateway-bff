@@ -1,0 +1,24 @@
+# Product Feedback App Specific Configuration
+#
+# This file contains ONLY app-specific overrides.
+# It inherits all base configuration from values.yaml (image tag, Redis, Keycloak, etc.)
+#
+# Usage:
+#   helm install product-feedback-bff ./authgateway-bff \
+#     -f values.yaml \
+#     -f values-product-feedback.yaml
+#
+# The CI/CD pipeline updates values.yaml with new image tags automatically.
+
+# OpenID Connect configuration
+config:
+  openIdConnect:
+    clientId: "product-feedback"
+
+  # Reverse proxy configuration
+  reverseProxy:
+    clusters:
+      product-feedback-api:
+        destinations:
+          destination1:
+            address: "http://product-feedback-api-svc.product-feedback.svc.cluster.local:5185/"

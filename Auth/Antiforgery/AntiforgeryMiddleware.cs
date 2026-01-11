@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Antiforgery;
 
-namespace ProductFeedback.BFF.Auth.Antiforgery;
+namespace AuthGateway.BFF.Auth.Antiforgery;
 
 /// <summary>
 /// Middleware to validate anti-forgery tokens for state-changing requests

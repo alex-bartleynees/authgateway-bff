@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace ProductFeedback.BFF.Auth;
+namespace AuthGateway.BFF.Auth;
 
 internal static class AuthorizationExtensions
 {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Options;
 
-namespace ProductFeedback.BFF.Auth.OIDC;
+namespace AuthGateway.BFF.Auth.OIDC;
 
 internal static class OpenIdConnectModule
 {

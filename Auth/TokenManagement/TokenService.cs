@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Options;
 
-namespace ProductFeedback.BFF.Auth.TokenManagement;
+namespace AuthGateway.BFF.Auth.TokenManagement;
 
 public interface ITokenService
 {

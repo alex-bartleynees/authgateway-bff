@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Options;
-using OpenIdConnectOptions = ProductFeedback.BFF.Auth.OIDC.OpenIdConnectOptions;
+using OpenIdConnectOptions = AuthGateway.BFF.Auth.OIDC.OpenIdConnectOptions;
 
-namespace ProductFeedback.BFF.Auth;
+namespace AuthGateway.BFF.Auth;
 
 internal static class BffEndpointsModule
 {

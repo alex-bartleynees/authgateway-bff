@@ -1,4 +1,4 @@
-namespace ProductFeedback.BFF.Common.Clocks;
+namespace AuthGateway.BFF.Common.Clocks;
 
 public static class ClockModule
 {

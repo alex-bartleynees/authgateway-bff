@@ -1,6 +1,6 @@
-# Product Feedback BFF
+# AuthGateway BFF
 
-A Backend-for-Frontend (BFF) service for the Product Feedback application, built with ASP.NET Core 10.0. This service handles authentication, session management, and proxies API requests to backend services.
+A Backend-for-Frontend (BFF) service built with ASP.NET Core 10.0. This service handles authentication, session management, and proxies API requests to backend services.
 
 ## Features
 
@@ -108,13 +108,13 @@ direnv allow
 
 ```bash
 # Build the image
-docker build -t product-feedback-bff .
+docker build -t authgateway-bff .
 
 # Run the container
 docker run -p 5224:5224 \
   -e KEYCLOAK_SERVER_URL=https://keycloak.example.com \
   -e OpenIdConnectOptions__ClientSecret=your-secret \
-  product-feedback-bff
+  authgateway-bff
 ```
 
 ### Kubernetes
@@ -122,7 +122,7 @@ docker run -p 5224:5224 \
 Helm charts are available in the `deployment/helm-charts` directory:
 
 ```bash
-helm install product-feedback-bff ./deployment/helm-charts/product-feedback-bff \
+helm install authgateway-bff ./deployment/helm-charts/authgateway-bff \
   --set keycloak.serverUrl=https://keycloak.example.com \
   --set oidc.clientSecret=your-secret
 ```

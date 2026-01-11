@@ -32,8 +32,8 @@ jobs:
           context: .
           push: true
           tags: |
-            creativefree/product-feedback-bff:latest
-            creativefree/product-feedback-bff:${{ steps.tag.outputs.build_id }}
+            creativefree/authgateway-bff:latest
+            creativefree/authgateway-bff:${{ steps.tag.outputs.build_id }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -47,12 +47,12 @@ jobs:
 
       - name: Update values.yaml with build tag
         run: |
-          sed -i "s/tag: .*/tag: ${{ steps.tag.outputs.build_id }}/" deployment/helm-charts/product-feedback-bff/values.yaml
-          git add deployment/helm-charts/product-feedback-bff/values.yaml
+          sed -i "s/tag: .*/tag: ${{ steps.tag.outputs.build_id }}/" deployment/helm-charts/authgateway-bff/values.yaml
+          git add deployment/helm-charts/authgateway-bff/values.yaml
           git commit -m "Update image tag to ${{ steps.tag.outputs.build_id }}"
           git push origin main
 
       - name: Package and Push Helm Chart
         run: |
-          helm package ./deployment/helm-charts/product-feedback-bff
-          helm push product-feedback-bff-*.tgz oci://registry-1.docker.io/creativefree
+          helm package ./deployment/helm-charts/authgateway-bff
+          helm push authgateway-bff-*.tgz oci://registry-1.docker.io/creativefree

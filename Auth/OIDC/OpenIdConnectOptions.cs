@@ -1,4 +1,4 @@
-namespace ProductFeedback.BFF.Auth.OIDC;
+namespace AuthGateway.BFF.Auth.OIDC;
 
 internal sealed class OpenIdConnectOptions
 {

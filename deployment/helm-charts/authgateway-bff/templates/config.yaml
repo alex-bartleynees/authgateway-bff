@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "authgateway-bff.fullname" . }}-config
+  labels:
+    {{- include "authgateway-bff.labels" . | nindent 4 }}
+data:
+  # ASP.NET Core settings
+  ASPNETCORE_HTTP_PORTS: {{ .Values.config.aspNetCore.httpPorts | quote }}
+  ASPNETCORE_URLS: {{ .Values.config.aspNetCore.urls | quote }}
+  ASPNETCORE_FORWARDEDHEADERS_ENABLED: {{ .Values.config.aspNetCore.forwardedHeadersEnabled | quote }}
+
+  # .NET Runtime settings
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: {{ .Values.config.dotnet.globalizationInvariant | quote }}
+
+  # Forwarded Headers configuration
+  {{- range $index, $network := .Values.config.forwardedHeaders.knownNetworks }}
+  ForwardedHeaders__KnownNetworks__{{ $index }}: {{ $network | quote }}
+  {{- end }}
+
+  # Keycloak settings
+  KEYCLOAK_SERVER_URL: {{ .Values.keycloak.serverUrl | quote }}
+
+  # OpenID Connect settings
+  OpenIdConnectOptions__ClientId: {{ .Values.config.openIdConnect.clientId | quote }}
+  OpenIdConnectOptions__RedirectUri: {{ .Values.config.openIdConnect.redirectUri | quote }}
+
+  # Redis settings
+  Redis__UseTls: {{ .Values.redis.useTls | quote }}
+  Redis__Host: {{ .Values.redis.host | quote }}
+
+  # Reverse Proxy settings - dynamically generate from values
+  {{- range $clusterName, $cluster := .Values.config.reverseProxy.clusters }}
+  {{- range $destName, $dest := $cluster.destinations }}
+  ReverseProxy__Clusters__{{ $clusterName }}__Destinations__{{ $destName }}__Address: {{ $dest.address | quote }}
+  {{- end }}
+  {{- end }}

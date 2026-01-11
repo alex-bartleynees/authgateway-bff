@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using StackExchange.Redis;
 
-namespace ProductFeedback.BFF.Auth.DataProtection;
+namespace AuthGateway.BFF.Auth.DataProtection;
 
 internal sealed class RedisTicketStore : ITicketStore
 {

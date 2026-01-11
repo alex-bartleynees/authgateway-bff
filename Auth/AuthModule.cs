@@ -1,9 +1,9 @@
-using ProductFeedback.BFF.Auth.Antiforgery;
-using ProductFeedback.BFF.Auth.DataProtection;
-using ProductFeedback.BFF.Auth.OIDC;
-using ProductFeedback.BFF.Auth.TokenManagement;
+using AuthGateway.BFF.Auth.Antiforgery;
+using AuthGateway.BFF.Auth.DataProtection;
+using AuthGateway.BFF.Auth.OIDC;
+using AuthGateway.BFF.Auth.TokenManagement;
 
-namespace ProductFeedback.BFF.Auth;
+namespace AuthGateway.BFF.Auth;
 
 internal static class AuthModule
 {

@@ -1,9 +1,9 @@
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using ProductFeedback.BFF.Auth.TokenManagement;
+using AuthGateway.BFF.Auth.TokenManagement;
 using Yarp.ReverseProxy.Transforms;
 
-namespace ProductFeedback.BFF.RequestProxying.Yarp;
+namespace AuthGateway.BFF.RequestProxying.Yarp;
 
 internal static class YarpModule
 {
@@ -37,7 +37,7 @@ internal static class YarpModule
                             // Log warning but continue - backend will handle unauthorized
                             var logger = transformContext.HttpContext.RequestServices
                                 .GetRequiredService<ILoggerFactory>()
-                                .CreateLogger("ProductFeedback.BFF.RequestProxying.Yarp");
+                                .CreateLogger("AuthGateway.BFF.RequestProxying.Yarp");
                             logger.LogWarning("Failed to retrieve access token: {Error}", tokenResult.Error);
                         }
                     }

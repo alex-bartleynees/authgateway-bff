@@ -1,6 +1,6 @@
-using ProductFeedback.BFF.RequestProxying.Yarp;
+using AuthGateway.BFF.RequestProxying.Yarp;
 
-namespace ProductFeedback.BFF.RequestProxying;
+namespace AuthGateway.BFF.RequestProxying;
 
 internal static class RequestProxyingModule
 {

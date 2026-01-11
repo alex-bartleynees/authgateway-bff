@@ -1,4 +1,4 @@
-# Default values for product-feedback-bff.
+# Default values for authgateway-bff.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -7,7 +7,7 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: creativefree/product-feedback-bff
+  repository: creativefree/authgateway-bff
   # This sets the pull policy for images.
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
@@ -124,9 +124,38 @@ affinity: {}
 
 # Redis configuration for caching
 redis:
-  secretName: "redis-auth" 
-  passwordKey: "REDIS_PASSWORD" 
+  secretName: "redis-auth"
+  passwordKey: "REDIS_PASSWORD"
+  useTls: true
+  host: "redis-master.redis.svc.cluster.local:6379"
 
 keycloak:
   secretName: "keycloak-auth"
   clientSecretKey: "CLIENT_SECRET"
+  serverUrl: "https://identity.alexbartleynees.com"
+
+# Application configuration
+config:
+  aspNetCore:
+    httpPorts: "5224"
+    urls: "http://+:5224"
+    forwardedHeadersEnabled: "true"
+  dotnet:
+    globalizationInvariant: "true"
+  forwardedHeaders:
+    knownNetworks:
+      - "10.244.0.0/16"
+  openIdConnect:
+    clientId: "your-client-id"
+    redirectUri: "/"
+  # Reverse proxy configuration - customize per app
+  # Define your backend clusters in app-specific values files
+  # Example structure:
+  #   reverseProxy:
+  #     clusters:
+  #       backend-api:
+  #         destinations:
+  #           destination1:
+  #             address: "http://backend-api-svc.default.svc.cluster.local:8080/"
+  reverseProxy:
+    clusters: {}

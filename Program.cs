@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.HttpOverrides;
-using ProductFeedback.BFF.Auth;
-using ProductFeedback.BFF.Common.Clocks;
-using ProductFeedback.BFF.RequestProxying;
+using AuthGateway.BFF.Auth;
+using AuthGateway.BFF.Common.Clocks;
+using AuthGateway.BFF.RequestProxying;
 using IPNetwork = System.Net.IPNetwork;
 
 var builder = WebApplication.CreateBuilder(args);

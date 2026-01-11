@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using StackExchange.Redis;
 
-namespace ProductFeedback.BFF.Auth.DataProtection;
+namespace AuthGateway.BFF.Auth.DataProtection;
 
 internal static class DataProtectionModule
 {
@@ -46,7 +46,7 @@ internal static class DataProtectionModule
 
         builder.Services.AddDataProtection()
             .PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys")
-            .SetApplicationName("product-feedback-bff");
+            .SetApplicationName("authgateway-bff");
 
         return builder.Services;
     }
