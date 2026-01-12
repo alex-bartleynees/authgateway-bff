@@ -30,6 +30,10 @@ data:
   Redis__Host: {{ .Values.redis.host | quote }}
 
   # Reverse Proxy settings - dynamically generate from values
+  {{- range $routeName, $route := .Values.config.reverseProxy.routes }}
+  ReverseProxy__Routes__{{ $routeName }}__ClusterId: {{ $route.clusterId | quote }}
+  ReverseProxy__Routes__{{ $routeName }}__Match__Path: {{ $route.match.path | quote }}
+  {{- end }}
   {{- range $clusterName, $cluster := .Values.config.reverseProxy.clusters }}
   {{- range $destName, $dest := $cluster.destinations }}
   ReverseProxy__Clusters__{{ $clusterName }}__Destinations__{{ $destName }}__Address: {{ $dest.address | quote }}

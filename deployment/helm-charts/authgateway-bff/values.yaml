@@ -149,13 +149,19 @@ config:
     clientId: "your-client-id"
     redirectUri: "/"
   # Reverse proxy configuration - customize per app
-  # Define your backend clusters in app-specific values files
+  # Define your backend routes and clusters in app-specific values files
   # Example structure:
   #   reverseProxy:
+  #     routes:
+  #       api-route:
+  #         clusterId: "backend-api"
+  #         match:
+  #           path: "/api/{**catch-all}"
   #     clusters:
   #       backend-api:
   #         destinations:
   #           destination1:
   #             address: "http://backend-api-svc.default.svc.cluster.local:8080/"
   reverseProxy:
+    routes: {}
     clusters: {}

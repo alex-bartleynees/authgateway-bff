@@ -17,6 +17,11 @@ config:
 
   # Reverse proxy configuration
   reverseProxy:
+    routes:
+      api-route:
+        clusterId: "product-feedback-api"
+        match:
+          path: "/api/{**catch-all}"
     clusters:
       product-feedback-api:
         destinations:
