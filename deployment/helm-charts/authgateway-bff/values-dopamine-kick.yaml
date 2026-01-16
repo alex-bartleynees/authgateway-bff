@@ -3,11 +3,6 @@ config:
     clientId: "dopamine-kick"
     redirectUri: "/dashboard"
 
-  keycloak:
-    secretName: "keycloak-auth"
-    clientSecretKey: "DOPAMINE_KICK_CLIENT_SECRET"
-    serverUrl: "https://identity.alexbartleynees.com"
-
   # Reverse proxy configuration
   reverseProxy:
     routes:
@@ -20,3 +15,8 @@ config:
         destinations:
           destination1:
             address: "http://dopamine-kick-api-svc.dopamine-kick.svc.cluster.local:5185/"
+
+keycloak:
+  secretName: "keycloak-auth"
+  clientSecretKey: "DOPAMINE_KICK_CLIENT_SECRET"
+  serverUrl: "https://identity.alexbartleynees.com"
