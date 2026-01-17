@@ -14,6 +14,7 @@ data:
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: {{ .Values.config.dotnet.globalizationInvariant | quote }}
 
   # Forwarded Headers configuration
+  TrustedProxyNetwork: {{ .Values.config.forwardedHeaders.trustedProxyNetwork | default "10.244.0.0/16" | quote }}
   {{- range $index, $network := .Values.config.forwardedHeaders.knownNetworks }}
   ForwardedHeaders__KnownNetworks__{{ $index }}: {{ $network | quote }}
   {{- end }}
