@@ -25,6 +25,9 @@ data:
   # OpenID Connect settings
   OpenIdConnectOptions__ClientId: {{ .Values.config.openIdConnect.clientId | quote }}
   OpenIdConnectOptions__RedirectUri: {{ .Values.config.openIdConnect.redirectUri | quote }}
+  {{- if .Values.config.openIdConnect.oidcCookieSameSite }}
+  OpenIdConnectOptions__OidcCookieSameSite: {{ .Values.config.openIdConnect.oidcCookieSameSite | quote }}
+  {{- end }}
 
   # Redis settings
   Redis__UseTls: {{ .Values.redis.useTls | quote }}

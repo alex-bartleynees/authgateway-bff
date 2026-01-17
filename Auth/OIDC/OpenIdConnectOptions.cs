@@ -16,6 +16,7 @@ internal sealed class OpenIdConnectOptions
     public bool SaveTokens { get; init; }
     public bool RequireHttpsMetadata { get; init; } = true;
     public bool RequireSecureCookies { get; init; } = true;
+    public string OidcCookieSameSite { get; init; } = "Lax"; // Lax or Strict - controls nonce/correlation cookies
     public string Scope { get; init; } = string.Empty;
     public string AuthorityPath { get; init; } = string.Empty;
     public string Authority => $"{ServerUrl}/{AuthorityPath}";

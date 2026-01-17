@@ -72,11 +72,14 @@ internal static class OpenIdConnectModule
          options.CorrelationCookie.SecurePolicy = cookieSecurePolicy;
          options.NonceCookie.SecurePolicy = cookieSecurePolicy;
 
-         var sameSiteMode = openIdConnectOptions.RequireSecureCookies
+         // Configure SameSite for OIDC cookies (nonce/correlation)
+         // Lax (recommended): Allows cookies during callback redirects from identity provider
+         // Strict: More secure but may block cookies during OIDC redirects
+         var oidcCookieSameSite = openIdConnectOptions.OidcCookieSameSite.Equals("Strict", StringComparison.OrdinalIgnoreCase)
             ? SameSiteMode.Strict
             : SameSiteMode.Lax;
-         options.CorrelationCookie.SameSite = sameSiteMode;
-         options.NonceCookie.SameSite = sameSiteMode;
+         options.CorrelationCookie.SameSite = oidcCookieSameSite;
+         options.NonceCookie.SameSite = oidcCookieSameSite;
 
          // Callback paths
          options.CallbackPath = "/signin-oidc";
