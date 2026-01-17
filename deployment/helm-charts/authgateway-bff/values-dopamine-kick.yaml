@@ -14,7 +14,7 @@ config:
       dopamine-kick-api:
         destinations:
           destination1:
-            address: "http://dopamine-kick-api-svc.dopamine-kick.svc.cluster.local:5185/"
+            address: "http://dopamine-kick-api.dopamine-kick.svc.cluster.local:5009/"
 
 keycloak:
   secretName: "keycloak-auth"
