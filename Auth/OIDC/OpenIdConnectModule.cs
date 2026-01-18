@@ -23,7 +23,7 @@ internal static class OpenIdConnectModule
       .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
       {
          options.Cookie.Name = openIdConnectOptions.CookieName;
-         options.ExpireTimeSpan = TimeSpan.FromHours(8);
+         options.ExpireTimeSpan = TimeSpan.FromHours(openIdConnectOptions.CookieExpireTimeSpanHours);
          options.Cookie.SecurePolicy = openIdConnectOptions.RequireSecureCookies
             ? CookieSecurePolicy.Always
             : CookieSecurePolicy.SameAsRequest;

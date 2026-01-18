@@ -28,6 +28,9 @@ data:
   {{- if .Values.config.openIdConnect.oidcCookieSameSite }}
   OpenIdConnectOptions__OidcCookieSameSite: {{ .Values.config.openIdConnect.oidcCookieSameSite | quote }}
   {{- end }}
+  {{- if .Values.config.openIdConnect.cookieExpireTimeSpanHours }}
+  OpenIdConnectOptions__CookieExpireTimeSpanHours: {{ .Values.config.openIdConnect.cookieExpireTimeSpanHours | quote }}
+  {{- end }}
 
   # Redis settings
   Redis__UseTls: {{ .Values.redis.useTls | quote }}

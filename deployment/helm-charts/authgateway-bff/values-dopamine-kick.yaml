@@ -3,6 +3,7 @@ config:
     clientId: "dopamine-kick"
     redirectUri: "/dashboard"
     oidcCookieSameSite: "Lax"  # Use "Lax" for OIDC redirects to work, or "Strict" for maximum security
+    cookieExpireTimeSpanHours: 8760  # 365 days
 
   # Reverse proxy configuration
   reverseProxy:
