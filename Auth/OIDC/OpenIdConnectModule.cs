@@ -24,6 +24,7 @@ internal static class OpenIdConnectModule
       {
          options.Cookie.Name = openIdConnectOptions.CookieName;
          options.ExpireTimeSpan = TimeSpan.FromHours(openIdConnectOptions.CookieExpireTimeSpanHours);
+         options.Cookie.MaxAge = TimeSpan.FromHours(openIdConnectOptions.CookieExpireTimeSpanHours);
          options.Cookie.SecurePolicy = openIdConnectOptions.RequireSecureCookies
             ? CookieSecurePolicy.Always
             : CookieSecurePolicy.SameAsRequest;
