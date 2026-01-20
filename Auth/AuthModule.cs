@@ -21,6 +21,7 @@ internal static class AuthModule
             options.HeaderName = "X-CSRF-TOKEN";
             options.Cookie.Name = "__CSRF";
             options.Cookie.HttpOnly = true;
+            options.Cookie.MaxAge = TimeSpan.FromHours(oidcOptions?.CookieExpireTimeSpanHours ?? 8);
             options.Cookie.SecurePolicy = oidcOptions?.RequireSecureCookies ?? true
                 ? CookieSecurePolicy.Always
                 : CookieSecurePolicy.SameAsRequest;
