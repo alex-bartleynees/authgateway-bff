@@ -40,6 +40,17 @@ data:
   {{- range $routeName, $route := .Values.config.reverseProxy.routes }}
   ReverseProxy__Routes__{{ $routeName }}__ClusterId: {{ $route.clusterId | quote }}
   ReverseProxy__Routes__{{ $routeName }}__Match__Path: {{ $route.match.path | quote }}
+  {{- if $route.order }}
+  ReverseProxy__Routes__{{ $routeName }}__Order: {{ $route.order | quote }}
+  {{- end }}
+  {{- range $methodIndex, $method := $route.match.methods }}
+  ReverseProxy__Routes__{{ $routeName }}__Match__Methods__{{ $methodIndex }}: {{ $method | quote }}
+  {{- end }}
+  {{- range $transformIndex, $transform := $route.transforms }}
+  {{- range $transformKey, $transformValue := $transform }}
+  ReverseProxy__Routes__{{ $routeName }}__Transforms__{{ $transformIndex }}__{{ $transformKey }}: {{ $transformValue | quote }}
+  {{- end }}
+  {{- end }}
   {{- end }}
   {{- range $clusterName, $cluster := .Values.config.reverseProxy.clusters }}
   {{- range $destName, $dest := $cluster.destinations }}

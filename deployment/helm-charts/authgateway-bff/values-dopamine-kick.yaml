@@ -12,11 +12,33 @@ config:
         clusterId: "dopamine-kick-api"
         match:
           path: "/api/{**catch-all}"
+      # Stripe webhook isn't under the {productId} group and must pass through unmodified -
+      # must be evaluated before billing-route (lower Order = higher priority).
+      billing-webhook-route:
+        clusterId: "payments-gateway"
+        order: -20
+        match:
+          path: "/api/billing/webhook"
+          methods:
+            - "POST"
+      # payments-gateway requires a {productId} path segment the FE never sends, so inject
+      # the single product's id ("dopamine-kick") on the way out.
+      billing-route:
+        clusterId: "payments-gateway"
+        order: -10
+        match:
+          path: "/api/billing/{**remainder}"
+        transforms:
+          - PathPattern: "/api/billing/dopamine-kick/{**remainder}"
     clusters:
       dopamine-kick-api:
         destinations:
           destination1:
             address: "http://dopamine-kick-api.dopamine-kick.svc.cluster.local:5009/"
+      payments-gateway:
+        destinations:
+          destination1:
+            address: "http://payments-gateway.dopamine-kick.svc.cluster.local:8080/"
 
 keycloak:
   secretName: "keycloak-auth"
