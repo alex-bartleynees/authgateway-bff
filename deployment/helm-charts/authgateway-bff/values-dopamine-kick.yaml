@@ -29,7 +29,7 @@ config:
         match:
           path: "/api/billing/{**remainder}"
         transforms:
-          - PathPattern: "/api/billing/dopamine-kick/{**remainder}"
+          - PathPattern: "/api/billing/dopamine_kick/{**remainder}"
     clusters:
       dopamine-kick-api:
         destinations:
