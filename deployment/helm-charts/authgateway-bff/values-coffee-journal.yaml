@@ -8,6 +8,20 @@ config:
   # Reverse proxy configuration
   reverseProxy:
     routes:
+      # MCP OAuth discovery and protocol traffic must reach the API directly.
+      # The BFF preserves the MCP client's bearer token for /mcp requests.
+      mcp-metadata-route:
+        clusterId: "coffee-journal-api"
+        order: -40
+        match:
+          path: "/.well-known/oauth-protected-resource/mcp"
+          methods:
+            - "GET"
+      mcp-route:
+        clusterId: "coffee-journal-api"
+        order: -40
+        match:
+          path: "/mcp"
       # Stripe webhook isn't under the {productId} group and must pass through
       # unmodified/unauthenticated (Stripe verifies its own signature) - it must
       # be evaluated before billing-route (lower Order = higher priority).

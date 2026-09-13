@@ -19,6 +19,14 @@ internal static class YarpModule
                 // Add authentication token to proxied requests
                 builderContext.AddRequestTransform(async transformContext =>
                 {
+                    // MCP clients authenticate directly with a dedicated bearer token.
+                    // Leave that header untouched instead of replacing it with the
+                    // access token from an unrelated browser BFF session.
+                    if (transformContext.HttpContext.Request.Path.StartsWithSegments("/mcp"))
+                    {
+                        return;
+                    }
+
                     // Only add token for authenticated users
                     if (transformContext.HttpContext.User.Identity?.IsAuthenticated == true)
                     {
